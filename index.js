@@ -27,5 +27,4 @@ app.get("/followers/:userId", async (req, res) => {
     res.status(500).json({ error: "Server error", details: err.message });
   }
 });
-
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+export default app;
