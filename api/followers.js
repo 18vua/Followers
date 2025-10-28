@@ -1,17 +1,14 @@
-import express from "express";
 import fetch from "node-fetch";
-import dotenv from "dotenv";
-dotenv.config();
 
-const app = express();
-const PORT = process.env.PORT || 3000;
-const SECRET_KEY = process.env.SECRET_KEY;
+export default async function handler(req, res) {
+  const { userId, key } = req.query;
+  const authKey = req.headers.authorization || key;
 
-app.get("/followers/:userId", async (req, res) => {
-  const { userId } = req.params;
-  const key = req.headers.authorization;
+  if (!userId) {
+    return res.status(400).json({ error: "Missing userId" });
+  }
 
-  if (!key || key !== SECRET_KEY) {
+  if (!authKey || authKey !== process.env.SECRET_KEY) {
     return res.status(403).json({ error: "Forbidden" });
   }
 
@@ -22,9 +19,8 @@ app.get("/followers/:userId", async (req, res) => {
     }
 
     const data = await response.json();
-    res.json({ userId, followers: data.count });
+    res.status(200).json({ userId, followers: data.count });
   } catch (err) {
     res.status(500).json({ error: "Server error", details: err.message });
   }
-});
-export default app;
+}
