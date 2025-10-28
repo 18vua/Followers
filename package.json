@@ -1,0 +1,15 @@
+{
+  "name": "roblox-followers-proxy",
+  "version": "1.0.0",
+  "description": "Simple proxy to get Roblox follower counts",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "node-fetch": "^3.3.2",
+    "dotenv": "^16.3.1"
+  }
+}
